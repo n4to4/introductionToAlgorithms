@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 type TestCase struct {
 	name string
@@ -54,6 +57,39 @@ func TestBottomUpCutRod(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := BottomUpCutRod(prices, tt.n); got != tt.want {
 				t.Errorf("BottomUpCutRod() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+var input []int = []int{5, 10}
+
+func BenchmarkCutRod(b *testing.B) {
+	for _, in := range input {
+		b.Run(fmt.Sprintf("CutRod %d", in), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				BottomUpCutRod(prices, in)
+				CutRod(prices, in)
+			}
+		})
+	}
+}
+
+func BenchmarkMemoizedCutRod(b *testing.B) {
+	for _, in := range input {
+		b.Run(fmt.Sprintf("Memoized %d", in), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				MemoizedCutRod(prices, in)
+			}
+		})
+	}
+}
+
+func BenchmarkBottomUpCutRod(b *testing.B) {
+	for _, in := range input {
+		b.Run(fmt.Sprintf("BottomUp %d", in), func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				BottomUpCutRod(prices, in)
 			}
 		})
 	}
