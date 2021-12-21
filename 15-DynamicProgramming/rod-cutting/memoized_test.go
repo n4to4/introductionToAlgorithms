@@ -62,7 +62,7 @@ func TestBottomUpCutRod(t *testing.T) {
 	}
 }
 
-var input []int = []int{5, 10}
+var input []int = []int{5, 10, 15}
 
 func BenchmarkCutRod(b *testing.B) {
 	for _, in := range input {
