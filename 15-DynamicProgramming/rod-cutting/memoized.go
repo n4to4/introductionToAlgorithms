@@ -21,3 +21,19 @@ func memoizedCutRodAux(p []int, n int, r map[int]int) int {
 	}
 	return q
 }
+
+func BottomUpCutRod(p []int, n int) int {
+	r := make([]int, n+1)
+	r[0] = 0
+	for j := 1; j <= n; j++ {
+		q := -1
+		for i := 1; i <= j; i++ {
+			rr := p[i] + r[j-i]
+			if rr > q {
+				q = rr
+			}
+		}
+		r[j] = q
+	}
+	return r[n]
+}
